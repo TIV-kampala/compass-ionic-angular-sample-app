@@ -1,0 +1,69 @@
+<div
+  class="fixed inset-0 flex flex-col w-full h-full max-h-full p-4 bg-slate-200"
+>
+  <!-- Loading State -->
+  <div
+    *ngIf="isLoading"
+    class="absolute inset-0 flex flex-col items-center justify-center flex-1 w-full h-full px-4 py-4 bg-white"
+  >
+    <div
+      class="w-8 h-8 border-t-4 border-orange-600 rounded-full animate-spin"
+    ></div>
+    <p class="flex items-center justify-center py-4 text-xs">
+      Executing {{ selectedAction }} ...
+    </p>
+  </div>
+
+  <!-- Main Content -->
+  <ng-container *ngIf="!isLoading">
+    <div class="flex flex-row justify-center w-full px-4 py-2 bg-white">
+      <h1 class="flex justify-center text-lg font-bold text-black">
+        Angular Bridge RA
+      </h1>
+    </div>
+
+    <div
+      class="flex flex-row items-center justify-between w-full py-4 space-x-4"
+    >
+      <div class="flex-1">
+        <select
+          [(ngModel)]="selectedAction"
+          class="bg-white h-[50px] border rounded-lg px-2 w-full"
+          [class.border-orange-600]="isFocused"
+          [class.border-gray-200]="!isFocused"
+          (focus)="isFocused = true"
+          (blur)="isFocused = false"
+        >
+          <option value="">Select action</option>
+          <option *ngFor="let item of actions" [value]="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="flex-3">
+        <button
+          [disabled]="!selectedAction"
+          class="rounded-md h-[50px] flex justify-center items-center px-4"
+          [class.bg-gray-300]="!selectedAction"
+          [class.bg-orange-600]="selectedAction"
+          (click)="executeAction()"
+        >
+          <span class="mr-2">▶</span>
+          Execute
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="flex flex-col w-full max-w-full px-4 pb-4 overflow-scroll bg-white h-fit"
+    >
+      <div class="py-2">
+        <h2 class="text-lg font-medium">Result:</h2>
+      </div>
+      <div class="flex flex-wrap w-full py-4 overflow-x-auto rounded">
+        <ngx-json-viewer [json]="state"></ngx-json-viewer>
+      </div>
+    </div>
+  </ng-container>
+</div>
