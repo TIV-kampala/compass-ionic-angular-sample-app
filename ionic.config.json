@@ -1,0 +1,7 @@
+{
+  "name": "compass-ionic-bridge-ra-sample-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
